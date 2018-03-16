@@ -1,0 +1,204 @@
+var Request = new XMLHttpRequest();
+
+Request.open(
+  "get",
+  "https://data.kcg.gov.tw/dataset/a98754a3-3446-4c9a-abfc-58dc49f2158c/resource/48d4dfc4-a4b2-44a5-bdec-70f9558cd25d/download/opendatajson-1061116.json",
+  true
+);
+Request.send(null);
+var OpenData;
+var JsonParseData;
+var JasonStringify;
+Request.onload = function() {
+  OpenData = Request.responseText;
+  JsonParseData = JSON.parse(OpenData);
+  // JasonStringify = JSON.stringify(OpenData);
+  SetStation();
+};
+
+function SetStation() {
+  var FreeButton = document.querySelector("#FreeButton");
+  var PayButton = document.querySelector("#PayButton");
+  var SelecStation = document.querySelector("#SelectStation");
+  var ListStation = document.querySelector(".listStation");
+  var temp = [];
+  var option = "";
+  var listStr = "";
+  var len = JsonParseData.length;
+
+  for (var i = 0; i < len; i++) {
+    if (temp.indexOf(JsonParseData[i].Charge) < 0) {
+      temp.push(JsonParseData[i].Charge);
+      if (JsonParseData[i].Charge === "免費") {
+        option +=
+          '<button id="FreeButton" type="button" class="btn btn-outline-primary">' +
+          JsonParseData[i].Charge +
+          "</button>";
+      } else if (JsonParseData[i].Charge === "投幣式") {
+        option +=
+          '<button id="PayButton" type="button" class="btn btn-outline-warning">' +
+          JsonParseData[i].Charge +
+          "</button>";
+      }
+      console.log(JsonParseData[i].Charge);
+    }
+  }
+  SelecStation.innerHTML = option;
+
+  function setlist(e) {
+    initMap();
+
+    let allLatLngPromise = getAllLatLngPromise();
+    console.log(allLatLngPromise);
+
+    axios
+      .all(allLatLngPromise)
+      .then(function(allResponse) {
+        let latlngs = allResponse.map(function(v, i, a) {
+          console.log("i:", i, v.data);
+
+          if (v.data.status == "OK") {
+            var lat = v.data.results[0].geometry.location.lat;
+            var lng = v.data.results[0].geometry.location.lng;
+            var address = JsonParseData[i].Address;
+            return {
+              address,
+              lat,
+              lng
+            };
+          }
+          return null;
+        });
+
+        console.log(latlngs);
+
+        for (let i = 0; i < latlngs.length; i++) {
+          let data = latlngs[i];
+          var SelectTargetAddress = e.target.innerText;
+          if (SelectTargetAddress === JsonParseData[i].Charge) {
+            var iconImg = "";
+            if (JsonParseData[i].Charge === "免費") {
+              iconImg = "free.png";
+            } else {
+              iconImg = "get-money.png";
+            }
+            var icon = iconImg;
+            if (data) {
+              let marker = new google.maps.Marker({
+                position: { lat: data.lat, lng: data.lng },
+                map: map,
+                title: data.address,
+                icon: icon
+              });
+            }
+          }
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+  SelecStation.addEventListener("click", setlist, true);
+}
+
+function getAllLatLngPromise() {
+  return JsonParseData.map(function(v, i, a) {
+    return axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
+      params: {
+        address: v.Address,
+        key: "AIzaSyDQRMNQ09S5YJoGUhkHiMHhbIJSCZFj42M",
+        sensor: "false",
+        language: "zh-TW"
+      }
+    });
+  });
+}
+
+var map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 13,
+    center: { lat: 22.639011, lng: 120.304706 },
+    styles: [
+      { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+      {
+        featureType: "administrative.locality",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }]
+      },
+      {
+        featureType: "poi",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "geometry",
+        stylers: [{ color: "#263c3f" }]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#6b9a76" }]
+      },
+      {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [{ color: "#38414e" }]
+      },
+      {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#212a37" }]
+      },
+      {
+        featureType: "road",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#9ca5b3" }]
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [{ color: "#746855" }]
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#1f2835" }]
+      },
+      {
+        featureType: "road.highway",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#f3d19c" }]
+      },
+      {
+        featureType: "transit",
+        elementType: "geometry",
+        stylers: [{ color: "#2f3948" }]
+      },
+      {
+        featureType: "transit.station",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }]
+      },
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [{ color: "#17263c" }]
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#515c6d" }]
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.stroke",
+        stylers: [{ color: "#17263c" }]
+      }
+    ]
+  });
+}
