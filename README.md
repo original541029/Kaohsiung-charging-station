@@ -5,4 +5,4 @@
 - Bootstrap 
 - Google Map API 
 
-
+![kaosiungPage](https://github.com/original541029/Kaohsiung-charging-station/blob/master/kaosiungPage.png)
