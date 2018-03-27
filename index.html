@@ -8,20 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>高雄超級充電站</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
 </head>
 
 <body class="body">
     <div class="header">
         <div class="ChargeTitle d-flex justify-content-center">
-            <h1> 高雄超級充電站</h1>
+            <h2> 高雄超級充電站</h2>
         </div>
-        <img class="rounded mx-auto d-block" src="maxresdefault.jpg" style="width:20%;">
+        <img class="rounded mx-auto d-block headerIMG" src="maxresdefault.jpg">
         <div class="card  text-center ">
-            <div class="card-body">
-                <p class="card-text text-justify" style="width: 40rem"> 超級充電站能夠快速提供電能，並且會隨著電池內的電量情況減緩充電速度,現在提供投幣式及免費帶給您更方便查詢 充電位置 ，促進大眾使用低汙染電動車可減少碳排放量及降低空氣汙染，同時保有清新空氣，是利人利己的好事
+            <div class="card-body ">
+                <p class="card-text text-justify" style="width: 80%"> 超級充電站能夠快速提供電能，並且會隨著電池內的電量情況減緩充電速度,現在提供投幣式及免費帶給您更方便查詢 充電位置 ，促進大眾使用低汙染電動車可減少碳排放量及降低空氣汙染，同時保有清新空氣，是利人利己的好事
                 </p>
             </div>
             <div id="SelectStation" class="card-footer text-muted">
@@ -29,14 +28,12 @@
         </div>
     </div>
     <div id="map"></div>
+    <footer class="text-center" style="color: #6dffba;">Thank you again for your interest in our products.</footer>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sh-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="allscript.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy7niYo3hKVoLoxDPCbZqRZWG_x7jml4k&callback=initMap">
     </script>
