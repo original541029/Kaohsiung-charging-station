@@ -12,7 +12,6 @@ var JasonStringify;
 Request.onload = function() {
   OpenData = Request.responseText;
   JsonParseData = JSON.parse(OpenData);
-  // JasonStringify = JSON.stringify(OpenData);
   SetStation();
 };
 
@@ -26,6 +25,7 @@ function SetStation() {
   var listStr = "";
   var len = JsonParseData.length;
 
+  //建立免費及投幣式按鈕
   for (var i = 0; i < len; i++) {
     if (temp.indexOf(JsonParseData[i].Charge) < 0) {
       temp.push(JsonParseData[i].Charge);
@@ -52,11 +52,13 @@ function SetStation() {
     console.log(allLatLngPromise);
 
     axios
+    //發送axios取得的資料
       .all(allLatLngPromise)
+    //將結果命名成一個變數allResponse
       .then(function(allResponse) {
+    //將結果回傳承一個集合
         let latlngs = allResponse.map(function(v, i, a) {
           console.log("i:", i, v.data);
-
           if (v.data.status == "OK") {
             var lat = v.data.results[0].geometry.location.lat;
             var lng = v.data.results[0].geometry.location.lng;
@@ -100,9 +102,10 @@ function SetStation() {
   }
   SelecStation.addEventListener("click", setlist, true);
 }
-
+//加入map索引
 function getAllLatLngPromise() {
   return JsonParseData.map(function(v, i, a) {
+//用axios取得地理編碼轉換格式
     return axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
       params: {
         address: v.Address,
