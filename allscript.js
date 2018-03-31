@@ -56,7 +56,7 @@ function SetStation() {
       .all(allLatLngPromise)
     //將結果命名成一個變數allResponse
       .then(function(allResponse) {
-    //將結果回傳承一個集合
+    //解析結果放入latlngs的集合中
         let latlngs = allResponse.map(function(v, i, a) {
           console.log("i:", i, v.data);
           if (v.data.status == "OK") {
