@@ -2,7 +2,7 @@ var Request = new XMLHttpRequest();
 
 Request.open(
   "get",
-  "https://data.kcg.gov.tw/dataset/a98754a3-3446-4c9a-abfc-58dc49f2158c/resource/48d4dfc4-a4b2-44a5-bdec-70f9558cd25d/download/opendatajson-1061116.json",
+  "http://jinnik.azurewebsites.net/getJson.php",
   true
 );
 Request.send(null);
