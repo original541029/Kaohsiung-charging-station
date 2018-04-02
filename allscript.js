@@ -1,5 +1,5 @@
-if (Request.status == 404) {
-    var Request = new XMLHttpRequest();
+var Request = new XMLHttpRequest();
+if (Request.status == 0) {
     Request.open(
         "get",
         "http://jinnik.azurewebsites.net/getJson.php",
@@ -17,6 +17,7 @@ if (Request.status == 404) {
 } else {
     SetStation();
 }
+
 
 function SetStation() {
     var FreeButton = document.querySelector("#FreeButton");
